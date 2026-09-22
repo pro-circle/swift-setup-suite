@@ -48,3 +48,16 @@ export function useUpdateStatus(id: string) {
     },
   });
 }
+
+export function useUpdatePriority(id: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (priority: Priority) => updateTicketPriority(id, priority),
+    onSuccess: (ticket) => {
+      queryClient.setQueryData(["ticket", id], ticket);
+      queryClient.invalidateQueries({ queryKey: ["tickets"] });
+    },
+  });
+}
+
