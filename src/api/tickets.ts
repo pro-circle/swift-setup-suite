@@ -1,7 +1,7 @@
 // Small fetch wrapper around the FastAPI backend.
 // The base URL comes from VITE_API_URL (see .env.example).
 
-export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+export const API_URL = import.meta.env["VITE_API_URL"] ?? "http://localhost:8000";
 
 export const PRIORITIES = ["Low", "Medium", "High"] as const;
 export const STATUSES = ["Open", "In Progress", "Resolved"] as const;
