@@ -37,28 +37,33 @@ function TicketsPage() {
 
   return (
     <Page>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">Tickets</h1>
-        <label className="flex items-center gap-2 text-sm text-slate-600">
-          Filter
-          <select
-            value={status ?? "All"}
-            onChange={(event) => {
-              const value = event.target.value;
-              navigate({
-                search: value === "All" ? {} : { status: value as Status },
-              });
-            }}
-            className="rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900"
-          >
-            <option value="All">All</option>
-            {STATUSES.map((option) => (
-              <option key={option} value={option}>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Tickets</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            {tickets ? `${tickets.length} ${tickets.length === 1 ? "ticket" : "tickets"}` : "Your support tickets"}
+          </p>
+        </div>
+        <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+          {(["All", ...STATUSES] as const).map((option) => {
+            const active = option === "All" ? !status : status === option;
+            return (
+              <button
+                key={option}
+                onClick={() =>
+                  navigate({ search: option === "All" ? {} : { status: option as Status } })
+                }
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  active
+                    ? "bg-slate-900 text-white shadow-sm"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                }`}
+              >
                 {option}
-              </option>
-            ))}
-          </select>
-        </label>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {isPending ? <Loading label="Loading tickets..." /> : null}
@@ -66,9 +71,21 @@ function TicketsPage() {
 
       {tickets ? (
         tickets.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-            No tickets yet. Create your first one.
-          </p>
+          <div className="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-xl">
+              📭
+            </div>
+            <p className="mt-4 text-sm font-medium text-slate-900">No tickets here yet</p>
+            <p className="mt-1 text-sm text-slate-500">
+              {status ? `Nothing with status "${status}". Try another filter or create one.` : "Create your first ticket to get started."}
+            </p>
+            <Link
+              to="/tickets/new"
+              className="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-700"
+            >
+              + Create Ticket
+            </Link>
+          </div>
         ) : (
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
             <table className="w-full text-left text-sm">
