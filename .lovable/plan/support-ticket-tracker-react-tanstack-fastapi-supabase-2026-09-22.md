@@ -1,10 +1,11 @@
 # Support Ticket Tracker — React + TanStack + FastAPI + Supabase
 
-A minimal, clean ticket tracker matching the internship assessment: create tickets, list them, view details, update status, filter by status, with validation on both sides. No authentication. No Lovable Cloud — the database is your own Supabase project and the API is a FastAPI service you run yourself.
+A minimal, clean ticket tracker matching the internship assessment: create tickets, list them, view details, update status, filter by status, with validation on both sides. No authentication. No Lovable Cloud — the database is your own Supabase project and the API is a FastAPI service you run yourself. Keeping the Codebase as human typed and easily readable.
 
 ## What gets built
 
 **1. Frontend (runs in this project)**
+
 - Tickets list page: table of Title, Priority, Status, Created date, with a status filter (All / Open / In Progress / Resolved) and a "Create Ticket" button.
 - Create page: Title, Description, Priority (Low/Medium/High), with inline validation before submit; new tickets default to Open.
 - Detail page: full ticket info plus a status dropdown that saves immediately, and a back link.
@@ -12,6 +13,7 @@ A minimal, clean ticket tracker matching the internship assessment: create ticke
 - Minimal, friendly styling: neutral palette, colored badges for priority and status, generous spacing, readable on mobile.
 
 **2. FastAPI backend files (generated in a `backend/` folder)**
+
 - `POST /api/tickets`, `GET /api/tickets` (optional `?status=`), `GET /api/tickets/{id}`, `PATCH /api/tickets/{id}`
 - Layered structure: routes → Pydantic schemas → service → SQLAlchemy model → database session
 - Pydantic validation for required fields and allowed priority/status values
@@ -19,6 +21,7 @@ A minimal, clean ticket tracker matching the internship assessment: create ticke
 - `requirements.txt` and `.env.example`
 
 **3. Supabase setup**
+
 - SQL migration file creating the `tickets` table (id UUID, title, description, priority, status, created_at, updated_at) with value constraints, defaults, and an `updated_at` trigger — you run it in the Supabase SQL editor.
 - `.env.example` files for both backend (database connection string) and frontend (API URL). No credentials in code.
 
