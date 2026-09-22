@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-import { STATUSES, type Status } from "@/api/tickets";
+import { PRIORITIES, STATUSES, type Priority, type Status } from "@/api/tickets";
 import { PriorityBadge } from "@/components/Badges";
 import { ErrorNotice, Loading, Page, formatDate } from "@/components/Layout";
-import { ticketQuery, useUpdateStatus } from "@/hooks/useTickets";
+import { ticketQuery, useUpdatePriority, useUpdateStatus } from "@/hooks/useTickets";
+
 
 export const Route = createFileRoute("/tickets/$id")({
   head: () => ({
