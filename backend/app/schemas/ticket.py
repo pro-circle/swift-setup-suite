@@ -32,8 +32,8 @@ class TicketUpdate(BaseModel):
     priority: Priority | None = None
 
 
-
 class TicketOut(BaseModel):
+
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID

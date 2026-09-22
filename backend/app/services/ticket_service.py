@@ -9,8 +9,8 @@ from app.models.ticket import Ticket
 from app.schemas.ticket import Priority, Status, TicketCreate
 
 
-
 def list_tickets(db: Session, status: Status | None = None) -> list[Ticket]:
+
     query = db.query(Ticket)
     if status is not None:
         query = query.filter(Ticket.status == status.value)
