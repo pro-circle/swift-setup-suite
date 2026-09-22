@@ -1,8 +1,9 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { PRIORITIES, type Priority } from "@/api/tickets";
-import { ErrorNotice, Page } from "@/components/Layout";
+import { Page } from "@/components/Layout";
 import { useCreateTicket } from "@/hooks/useTickets";
 
 export const Route = createFileRoute("/tickets/new")({
@@ -45,7 +46,17 @@ function CreateTicketPage() {
 
     createTicket.mutate(
       { title: title.trim(), description: description.trim(), priority },
-      { onSuccess: (ticket) => navigate({ to: "/tickets/$id", params: { id: ticket.id } }) },
+      {
+        onSuccess: (ticket) => {
+          toast.success("Ticket created", { description: ticket.title });
+          navigate({ to: "/tickets/$id", params: { id: ticket.id } });
+        },
+        onError: (error) => {
+          toast.error("Couldn't create the ticket", {
+            description: error instanceof Error ? error.message : "Please try again.",
+          });
+        },
+      },
     );
   }
 
