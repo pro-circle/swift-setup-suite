@@ -87,7 +87,7 @@ function TicketsPage() {
             </Link>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
@@ -99,12 +99,12 @@ function TicketsPage() {
               </thead>
               <tbody>
                 {tickets.map((ticket) => (
-                  <tr key={ticket.id} className="border-t border-slate-100 hover:bg-slate-50">
+                  <tr key={ticket.id} className="border-t border-slate-100 transition-colors hover:bg-slate-50">
                     <td className="px-4 py-3">
                       <Link
                         to="/tickets/$id"
                         params={{ id: ticket.id }}
-                        className="font-medium text-slate-900 underline-offset-2 hover:underline"
+                        className="font-medium text-slate-900 underline-offset-4 decoration-slate-300 hover:underline hover:decoration-slate-900"
                       >
                         {ticket.title}
                       </Link>
