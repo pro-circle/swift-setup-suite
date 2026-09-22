@@ -4,10 +4,13 @@ import {
   createTicket,
   getTicket,
   listTickets,
+  updateTicketPriority,
   updateTicketStatus,
   type NewTicket,
+  type Priority,
   type Status,
 } from "@/api/tickets";
+
 
 export const ticketsQuery = (status?: Status) =>
   queryOptions({
