@@ -6,7 +6,8 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 from app.models.ticket import Ticket
-from app.schemas.ticket import Status, TicketCreate
+from app.schemas.ticket import Priority, Status, TicketCreate
+
 
 
 def list_tickets(db: Session, status: Status | None = None) -> list[Ticket]:

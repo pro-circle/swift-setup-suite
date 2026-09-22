@@ -38,4 +38,9 @@ def update_ticket(ticket_id: UUID, payload: TicketUpdate, db: Session = Depends(
     ticket = ticket_service.get_ticket(db, ticket_id)
     if ticket is None:
         raise HTTPException(status_code=404, detail="Ticket not found")
-    return ticket_service.update_status(db, ticket, payload.status)
+    if payload.status is None and payload.priority is None:
+        raise HTTPException(status_code=422, detail="Provide status or priority to update")
+    return ticket_service.update_ticket(
+        db, ticket, status=payload.status, priority=payload.priority
+    )
+
