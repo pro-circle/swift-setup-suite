@@ -13,12 +13,14 @@ export const ticketsQuery = (status?: Status) =>
   queryOptions({
     queryKey: ["tickets", status ?? "All"],
     queryFn: () => listTickets(status),
+    retry: false,
   });
 
 export const ticketQuery = (id: string) =>
   queryOptions({
     queryKey: ["ticket", id],
     queryFn: () => getTicket(id),
+    retry: false,
   });
 
 export function useCreateTicket() {
