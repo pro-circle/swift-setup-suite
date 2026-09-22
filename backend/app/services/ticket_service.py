@@ -6,10 +6,11 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 from app.models.ticket import Ticket
-from app.schemas.ticket import Status, TicketCreate
+from app.schemas.ticket import Priority, Status, TicketCreate
 
 
 def list_tickets(db: Session, status: Status | None = None) -> list[Ticket]:
+
     query = db.query(Ticket)
     if status is not None:
         query = query.filter(Ticket.status == status.value)
@@ -33,9 +34,20 @@ def create_ticket(db: Session, payload: TicketCreate) -> Ticket:
     return ticket
 
 
-def update_status(db: Session, ticket: Ticket, status: Status) -> Ticket:
-    ticket.status = status.value
-    ticket.updated_at = datetime.now(timezone.utc)
-    db.commit()
-    db.refresh(ticket)
+def update_ticket(
+    db: Session,
+    ticket: Ticket,
+    *,
+    status: Status | None = None,
+    priority: Priority | None = None,
+) -> Ticket:
+    if status is not None:
+        ticket.status = status.value
+    if priority is not None:
+        ticket.priority = priority.value
+    if status is not None or priority is not None:
+        ticket.updated_at = datetime.now(timezone.utc)
+        db.commit()
+        db.refresh(ticket)
     return ticket
+

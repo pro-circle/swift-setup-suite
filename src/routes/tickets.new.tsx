@@ -44,20 +44,27 @@ function CreateTicketPage() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
+    const toastId = toast.loading("Creating your ticket...");
+
     createTicket.mutate(
       { title: title.trim(), description: description.trim(), priority },
       {
         onSuccess: (ticket) => {
-          toast.success("Ticket created", { description: ticket.title });
+          toast.success("Ticket created", {
+            id: toastId,
+            description: ticket.title,
+          });
           navigate({ to: "/tickets/$id", params: { id: ticket.id } });
         },
         onError: (error) => {
           toast.error("Couldn't create the ticket", {
+            id: toastId,
             description: error instanceof Error ? error.message : "Please try again.",
           });
         },
       },
     );
+
   }
 
   return (

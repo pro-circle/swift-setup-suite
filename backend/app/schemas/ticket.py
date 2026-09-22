@@ -26,12 +26,14 @@ class TicketCreate(BaseModel):
 
 
 class TicketUpdate(BaseModel):
-    """Only the status can be changed after creation."""
+    """Status and/or priority can be changed after creation."""
 
-    status: Status
+    status: Status | None = None
+    priority: Priority | None = None
 
 
 class TicketOut(BaseModel):
+
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
