@@ -96,3 +96,11 @@ export function updateTicketStatus(id: string, status: Status): Promise<Ticket> 
     body: JSON.stringify({ status }),
   });
 }
+
+export function updateTicketPriority(id: string, priority: Priority): Promise<Ticket> {
+  return request<Ticket>(`/api/tickets/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ priority }),
+  });
+}
+
