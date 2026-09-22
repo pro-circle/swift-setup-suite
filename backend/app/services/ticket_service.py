@@ -33,9 +33,20 @@ def create_ticket(db: Session, payload: TicketCreate) -> Ticket:
     return ticket
 
 
-def update_status(db: Session, ticket: Ticket, status: Status) -> Ticket:
-    ticket.status = status.value
-    ticket.updated_at = datetime.now(timezone.utc)
-    db.commit()
-    db.refresh(ticket)
+def update_ticket(
+    db: Session,
+    ticket: Ticket,
+    *,
+    status: Status | None = None,
+    priority: Priority | None = None,
+) -> Ticket:
+    if status is not None:
+        ticket.status = status.value
+    if priority is not None:
+        ticket.priority = priority.value
+    if status is not None or priority is not None:
+        ticket.updated_at = datetime.now(timezone.utc)
+        db.commit()
+        db.refresh(ticket)
     return ticket
+
